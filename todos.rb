@@ -1,9 +1,12 @@
 # ====== Data - START
+id = 0
+
 todos = [
-  { id: 1, content: "Fill the weekly feedback", completed: false },
-  { id: 2, content: "Complete Ruby Basics 1",  completed: false  },
-  { id: 3, content: "Complete Ruby Basics 2",  completed: false  }
+  { id: id.next, content: "Fill the weekly feedback", completed: false },
+  { id: id.next, content: "Complete Ruby Basics 1",  completed: false  },
+  { id: id.next, content: "Complete Ruby Basics 2",  completed: false  }
 ]
+
 # ====== Data -END
 
 # ====== Methods - START
@@ -29,7 +32,7 @@ action = nil
 while action != "exit"
   print "action: "
   action = gets.chomp
-  
+
   case action
   when "add"
     puts "Add todo"
@@ -43,7 +46,7 @@ while action != "exit"
     puts "Todo Delete"
   when "exit"
     puts "Thanks for using toDOS!"
-  else 
+  else
     puts "Invalid action"
   end
 
