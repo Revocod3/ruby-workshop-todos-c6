@@ -23,6 +23,11 @@ def todo_list(todos)
   end
 end
 
+def list_not_completed_todos(todos)
+  filteres_todos = todos.reject { |todo| todo[:completed] }
+  todo_list(filteres_todos)
+end
+
 def add_todo(todos, content)
   new_id = Time.new.to_i.digits(1000).first
   new_todo = { id: new_id, content: content, completed: false }
