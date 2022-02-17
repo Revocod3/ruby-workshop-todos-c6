@@ -13,6 +13,8 @@ def print_actions_menu
 end
 
 def todo_list(todos)
+  puts "------------------------Welcome to toDOS------------------------"
+  puts ""
   todos.each do |todo|
     puts "#{todo[:id]}. #{todo[:content]}"
   end
