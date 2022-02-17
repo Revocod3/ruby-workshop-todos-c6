@@ -23,4 +23,29 @@ end
 
 # ====== Main - START
 todo_list(todos)
+print_actions_menu
+
+action = nil
+while action != "exit"
+  print "action: "
+  action = gets.chomp
+  
+  case action
+  when "add"
+    puts "Add todo"
+  when "list"
+    puts "List uncompleted"
+  when "completed"
+    puts "List completed"
+  when "toggle"
+    puts "Toggle"
+  when "delete"
+    puts "Todo Delete"
+  when "exit"
+    puts "Thanks for using toDOS!"
+  else 
+    puts "Invalid action"
+  end
+
+end
 # ====== Main - END
