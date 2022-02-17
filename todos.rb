@@ -1,6 +1,6 @@
 # ====== Data - START
 todos = [
-  { id: 1, content: "Fill the weekly feedback", completed: false },
+  { id: 1, content: "Fill the weekly feedback", completed: false  },
   { id: 2, content: "Complete Ruby Basics 1",  completed: false  },
   { id: 3, content: "Complete Ruby Basics 2",  completed: false  }
 ]
@@ -19,6 +19,13 @@ def todo_list(todos)
     puts "#{todo[:id]}. #{todo[:content]}"
   end
 end
+
+def add_todo(todos, content)
+  new_id = Time.new.to_i.digits(1000).first
+  new_todo = { id: new_id, content: content, completed: false }
+  todos.push(new_todo)
+  puts "Adding => #{new_todo[:id]}. #{new_todo[:content]}"
+end
 # ====== Methods - END
 
 # ====== Main - START
@@ -32,7 +39,10 @@ while action != "exit"
   
   case action
   when "add"
-    puts "Add todo"
+    print "Content: "
+    content = gets.chomp
+    add_todo(todos, content)
+    print_actions_menu
   when "list"
     puts "List uncompleted"
   when "completed"
