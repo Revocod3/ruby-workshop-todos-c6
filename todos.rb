@@ -8,3 +8,11 @@ def print_actions_menu
   puts "-" * 65
   puts "add | list | completed | toggle | delete | exit"
 end
+
+def todo_list(todos)
+  todos.each do |todo|
+    puts "#{todo[:id]}. #{todo[:content]}"
+  end
+end
+
+todo_list(todos)
