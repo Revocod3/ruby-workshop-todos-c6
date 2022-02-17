@@ -2,9 +2,11 @@
 id = 0
 
 todos = [
-  { id: id.next, content: "Fill the weekly feedback", completed: false },
-  { id: id.next, content: "Complete Ruby Basics 1",  completed: false  },
-  { id: id.next, content: "Complete Ruby Basics 2",  completed: false  }
+  { id: (id = id.next), content: "Fill the weekly feedback", completed: false },
+  { id: (id = id.next), content: "Complete Ruby Basics 1", completed: true },
+  { id: (id = id.next), content: "Complete Ruby Basics 1", completed: false },
+  { id: (id = id.next), content: "Complete Ruby Basics 2", completed: true },
+  { id: (id = id.next), content: "Complete Ruby Basics 2", completed: false }
 ]
 
 # ====== Data -END
@@ -15,25 +17,31 @@ def print_actions_menu
   puts "add | list | completed | toggle | delete | exit"
 end
 
-def todo_list(todos)
+def todo_list(todos, is_completed: false)
   puts "------------------------Welcome to toDOS------------------------"
   puts ""
   todos.each do |todo|
-    puts "#{todo[:id]}. #{todo[:content]}"
+    puts "#{todo[:id]}. #{todo[:content]}" if todo[:completed] == is_completed
   end
 end
 
-def list_not_completed_todos(todos)
-  filteres_todos = todos.reject { |todo| todo[:completed] }
-  todo_list(filteres_todos)
-end
-
-def add_todo(todos, content)
-  new_id = Time.new.to_i.digits(1000).first
-  new_todo = { id: new_id, content: content, completed: false }
+def add_todo(todos, id, content)
+  new_todo = { id: id, content: content, completed: false }
   todos.push(new_todo)
   puts "Adding => #{new_todo[:id]}. #{new_todo[:content]}"
 end
+
+def toggle(todos, ids)
+  ids.each do |id|
+    found_todo = todos.find{ |todo| todo[:id] == id.to_i }
+    found_todo[:completed] = !found_todo[:completed] unless found_todo.nil?
+  end
+end
+
+def delete_todo(todos, todo_id)
+  todos.delete_if { |todo| todo[:id] == todo_id }
+end
+
 # ====== Methods - END
 
 # ====== Main - START
@@ -49,21 +57,27 @@ while action != "exit"
   when "add"
     print "Content: "
     content = gets.chomp
-    add_todo(todos, content)
-    print_actions_menu
+    id = id.next
+    add_todo(todos, id, content)
   when "list"
-    puts "List uncompleted"
+    todo_list(todos, is_completed: false)
   when "completed"
-    puts "List completed"
+    todo_list(todos, is_completed: true)
   when "toggle"
-    puts "Toggle"
+    print "Todo ID: "
+    ids = gets.chomp.split(',') # "1,2,3,4" => ["1","2","3","4"]
+    toggle(todos, ids)
   when "delete"
-    puts "Todo Delete"
+    print "Delete ID: "
+    id = gets.chomp.to_i
+    delete_todo(todos, id)
   when "exit"
     puts "Thanks for using toDOS!"
   else
     puts "Invalid action"
   end
+  
+  print_actions_menu
 
 end
 # ====== Main - END
